@@ -2,6 +2,7 @@ package com.ysr.diablo4armory.presentation.leaderboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -29,13 +31,22 @@ fun LeaderBoardScreen(
     viewModel: LeaderBoardViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        Text(
+            text = "Diablo 4 Leaderboard",
+            style = MaterialTheme.typography.h1,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 30.dp)
+                .align(CenterHorizontally)
+        )
+        LazyColumn(modifier = Modifier.fillMaxSize().align(CenterHorizontally)) {
             items(state.leaderBoardList) { leaderBoardItem ->
                 LeaderBoardItem(
                     entry = leaderBoardItem,
@@ -54,11 +65,14 @@ fun LeaderBoardScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
+                    .align(CenterHorizontally)
             )
         }
         if(state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            CircularProgressIndicator(
+                color = Color.White,
+                modifier = Modifier.align(CenterHorizontally)
+            )
         }
     }
 }
