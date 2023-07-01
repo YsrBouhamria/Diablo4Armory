@@ -11,7 +11,13 @@ import javax.inject.Inject
 
 class GetLeaderBoardUseCase @Inject constructor(private val repository: LeaderBoardRepository) {
 
-    operator fun invoke(classx :String?, mode: String?, rank: String?, pageSize: String?, pageNumber: String?) = flow<Resource<List<LeaderboardEntry>>> {
+    operator fun invoke(
+        classx :String?,
+        mode: String?,
+        rank: String?,
+        pageSize: String?,
+        pageNumber: String?
+    ) = flow {
         try {
             emit(Resource.Loading())
             val leaderBoardEntries = repository.getLeaderBoardByParam(

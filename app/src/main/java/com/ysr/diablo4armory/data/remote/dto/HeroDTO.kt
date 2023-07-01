@@ -33,12 +33,12 @@ data class HeroDTO(
 
 fun HeroDTO.toEntry() : HeroEntry {
 
-    var equipmentEntryList = ArrayList<EquipmentEntry>()
+    val equipmentEntryList = ArrayList<EquipmentEntry>()
     equipment.forEach{
         equipmentEntryList.add(it.toEntry())
     }
 
-    var skillList = ArrayList<SkillEntry>()
+    val skillList = ArrayList<SkillEntry>()
     skills.forEach{
         skillList.add(it.ToEntry())
     }
@@ -47,7 +47,7 @@ fun HeroDTO.toEntry() : HeroEntry {
         altars = altars,
         character = character,
         clan = clan,
-        `class` = `class`,
+        playerClass = `class`,
         completed_quests = completed_quests,
         createdAt = createdAt,
         dead = dead,

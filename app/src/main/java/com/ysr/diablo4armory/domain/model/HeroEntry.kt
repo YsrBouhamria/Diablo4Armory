@@ -1,14 +1,11 @@
 package com.ysr.diablo4armory.domain.model
 
-import com.ysr.diablo4armory.data.remote.dto.Equipment
-import com.ysr.diablo4armory.data.remote.dto.Skill
-
 data class HeroEntry (
     val accountLastUpdate: Int?,
     val altars: Any?,
     val character: String?,
     val clan: String?,
-    val `class`: String?,
+    val playerClass: String?,
     val completed_quests: Any?,
     val createdAt: Long?,
     val dead: Boolean?,
