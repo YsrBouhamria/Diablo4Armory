@@ -63,10 +63,10 @@ fun LeaderBoardItem(
                 )
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = "${entry.playerClass} (lvl ${entry.level}) Power ${entry.power} ",
+                    text = if(entry.skills.isEmpty()) "${entry.playerClass} (lvl ${entry.level}) (Private Profile)" else "${entry.playerClass} (lvl ${entry.level}) Power ${entry.power}",
                     style = MaterialTheme.typography.body2,
                     overflow = TextOverflow.Ellipsis,
-                    color = Color.White
+                    color = if(entry.skills.isEmpty()) Color.Red else Color.White
                 )
 
 
