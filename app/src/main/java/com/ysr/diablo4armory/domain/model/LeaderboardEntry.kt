@@ -2,7 +2,7 @@ package com.ysr.diablo4armory.domain.model
 
 data class LeaderboardEntry (
     val battleTag: String,
-    val `class`: String,
+    val playerClass: String,
     val dead: Boolean,
     val hardcore: Boolean,
     val heroId: String,

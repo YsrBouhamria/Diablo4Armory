@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import com.ysr.diablo4armory.presentation.Screen
 import com.ysr.diablo4armory.presentation.heroDetails.HeroDetailsScreen
 import com.ysr.diablo4armory.presentation.leaderboard.LeaderBoardScreen
+import com.ysr.diablo4armory.presentation.theme.D4ArmoryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,26 +22,27 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-              Surface(color = MaterialTheme.colors.background) {
-                  val navController = rememberNavController()
-                  NavHost(navController = navController, startDestination = Screen.LeaderBoardScreen.route) {
-                      composable(route = Screen.LeaderBoardScreen.route) {
-                          LeaderBoardScreen(navController)
-                      }
-                      composable(route = Screen.HeroDetailsScreen.route + "/{accountId}" + "/{heroId}",
-                          arguments = listOf(
-                              navArgument("accountId") {
-                                  type = NavType.StringType
-                              },
-                              navArgument("heroId") { // Notice over here
-                                  type = NavType.StringType
-                              }
-                          )) {
-                          HeroDetailsScreen()
-                      }
-                  }
-              }
-
+            D4ArmoryTheme() {
+                Surface(color = MaterialTheme.colors.background) {
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = Screen.LeaderBoardScreen.route) {
+                        composable(route = Screen.LeaderBoardScreen.route) {
+                            LeaderBoardScreen(navController)
+                        }
+                        composable(route = Screen.HeroDetailsScreen.route + "/{accountId}" + "/{heroId}",
+                            arguments = listOf(
+                                navArgument("accountId") {
+                                    type = NavType.StringType
+                                },
+                                navArgument("heroId") { // Notice over here
+                                    type = NavType.StringType
+                                }
+                            )) {
+                            HeroDetailsScreen()
+                        }
+                    }
+                }
+            }
         }
     }
 }

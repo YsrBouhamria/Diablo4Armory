@@ -18,7 +18,7 @@ data class LeaderboardDTO(
 fun LeaderboardDTO.toEntry() : LeaderboardEntry {
     return LeaderboardEntry(
         battleTag = battleTag,
-        `class` = `class`,
+        playerClass = `class`,
         dead = dead,
         hardcore = hardcore,
         heroId = heroId,
