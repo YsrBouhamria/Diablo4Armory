@@ -2,11 +2,13 @@ package com.ysr.diablo4armory.presentation.leaderboard
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ysr.diablo4armory.common.Constants
 import com.ysr.diablo4armory.common.Resource
+import com.ysr.diablo4armory.domain.model.LeaderboardEntry
 import com.ysr.diablo4armory.domain.usecase.getleaderboard.GetLeaderBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -21,40 +23,32 @@ class LeaderBoardViewModel @Inject constructor(
 
     private val _state = mutableStateOf(LeaderBoardState())
     val state : State<LeaderBoardState> = _state
-
-    init {
-
-        getLeaderBoard(
-            savedStateHandle.get<String>(Constants.PARAM_CLASS_FILTER),
-            savedStateHandle.get<String>(Constants.PARAM_MODE_FILTER),
-            savedStateHandle.get<String>(Constants.PARAM_ORDER_BY),
-            Constants.LEADERBOARD_PAGE_SIZE,
-            savedStateHandle.get<String>(Constants.CURRENT_PAGE)
-        )
-    }
-    private fun getLeaderBoard(playerClass: String?, mode: String?, rank: String?, pageSize: String?, pageNumber: String?) {
+    var page = 1
+    fun loadMore() {
         leaderBoardUseCase(
-            playerClass,
-            mode,
-            rank,
-            pageSize,
-            pageNumber
+            "",
+            "",
+            "",
+            Constants.LEADERBOARD_PAGE_SIZE,
+            page
         ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = LeaderBoardState(
-                        leaderBoardList = result.data ?:
-                        emptyList())
+                    result.data?.let {
+                        _state.value.leaderBoardList.addAll(result.data)
+                        page++
+                    }
                 }
                 is Resource.Loading -> {
-                    _state.value = LeaderBoardState(isLoading = true)
+                    _state.value = _state.value.copy(isLoading = true)
                 }
                 is Resource.Error -> {
-                    _state.value = LeaderBoardState(error = result.message ?:
+                    _state.value = state.value.copy(error = result.message ?:
                     "Something went wrong"
                     )
                 }
             }
         }.launchIn(viewModelScope)
     }
+
 }

@@ -1,5 +1,6 @@
 package com.ysr.diablo4armory.domain.usecase.getleaderboard
 
+import androidx.compose.runtime.toMutableStateList
 import com.ysr.diablo4armory.common.Resource
 import com.ysr.diablo4armory.data.remote.dto.toEntry
 import com.ysr.diablo4armory.domain.model.LeaderboardEntry
@@ -15,8 +16,8 @@ class GetLeaderBoardUseCase @Inject constructor(private val repository: LeaderBo
         classx :String?,
         mode: String?,
         rank: String?,
-        pageSize: String?,
-        pageNumber: String?
+        pageSize: Int?,
+        pageNumber: Int?
     ) = flow {
         try {
             emit(Resource.Loading())
@@ -29,7 +30,7 @@ class GetLeaderBoardUseCase @Inject constructor(private val repository: LeaderBo
             )
             emit(Resource.Success(leaderBoardEntries.map {
                 it.toEntry()
-            }))
+            }.toMutableStateList()))
         }
         catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))

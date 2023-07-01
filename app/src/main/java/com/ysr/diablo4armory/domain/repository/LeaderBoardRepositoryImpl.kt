@@ -1,5 +1,6 @@
 package com.ysr.diablo4armory.domain.repository
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.ysr.diablo4armory.data.remote.D4ArmoryAPI
 import com.ysr.diablo4armory.data.remote.dto.HeroDTO
 import com.ysr.diablo4armory.data.remote.dto.LeaderboardDTO
@@ -11,9 +12,9 @@ class LeaderBoardRepositoryImpl @Inject constructor(private val api: D4ArmoryAPI
         `class`: String?,
         mode: String?,
         rank: String?,
-        pageSize: String?,
-        pageNumber: String?
-    ): List<LeaderboardDTO> {
+        pageSize: Int?,
+        pageNumber: Int?
+    ): SnapshotStateList<LeaderboardDTO> {
        return api.getLeaderBoardByParams(
            `class`,
            mode,

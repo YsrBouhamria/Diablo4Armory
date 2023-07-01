@@ -10,6 +10,6 @@ object Constants {
     const val PARAM_MODE_FILTER = "modeFilter"
     const val PARAM_ORDER_BY = "orderBy"
     const val CURRENT_PAGE = "currentPage"
-    const val LEADERBOARD_PAGE_SIZE = "50"
+    const val LEADERBOARD_PAGE_SIZE = 25
 
 }
